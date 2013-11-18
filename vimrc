@@ -19,9 +19,15 @@ Bundle 'vim-scripts/tComment'
 Bundle 'kana/vim-smartinput'
 Bundle 'cohama/vim-smartinput-endwise'
 Bundle 'nathanaelkane/vim-indent-guides'
+Bundle 'scrooloose/syntastic'
+Bundle 'scrooloose/nerdtree'
+Bundle 'majutsushi/tagbar'
 
 " OmniComplete
-set completeopt=longest,menuone
+" set completeopt=longest,menuone
+set omnifunc=syntaxcomplete#Complete
+
+set modeline
 
 set hidden
 set shell=/usr/bin/bash
@@ -65,9 +71,43 @@ endif
 
 " GO Config
 set rtp+=$GOROOT/misc/vim
-filetype plugin indent on
-syntax on
 au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
+filetype plugin indent on
+filetype plugin on
+set autoindent
+set mouse=a
+set modeline
+syntax on
 
 " SmartInput-Endwise
 call smartinput_endwise#define_default_rules()
+
+
+" gotags
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
